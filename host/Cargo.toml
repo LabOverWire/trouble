@@ -64,6 +64,7 @@ embassy-executor = { version = "0.10", features = ["platform-std", "executor-thr
 embassy-time = { version = "0.5.1", features = ["std", "generic-queue-8"] }
 
 [features]
+refuse-unbondable-pairing = []
 defmt = ["dep:defmt", "embassy-time/defmt", "bt-hci/defmt"]
 log = ["dep:log"]
 

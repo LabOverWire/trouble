@@ -483,6 +483,11 @@ impl Pairing {
     ) -> Result<(), Error> {
         let peer_features = PairingFeatures::decode(payload).map_err(|_| Error::Security(Reason::InvalidParameters))?;
 
+        #[cfg(feature = "refuse-unbondable-pairing")]
+        if matches!(ops.bonding_flag(), BondingFlag::NoBonding) {
+            return Err(Error::Security(Reason::PairingNotSupported));
+        }
+
         #[cfg(not(feature = "legacy-pairing"))]
         if !peer_features.security_properties.secure_connection() {
             return Err(Error::Security(Reason::AuthenticationRequirements));
