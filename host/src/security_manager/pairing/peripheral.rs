@@ -484,7 +484,7 @@ impl Pairing {
         let peer_features = PairingFeatures::decode(payload).map_err(|_| Error::Security(Reason::InvalidParameters))?;
 
         #[cfg(feature = "refuse-unbondable-pairing")]
-        if matches!(ops.bonding_flag(), BondingFlag::NoBonding) {
+        if matches!(ops.bonding_flag(), crate::security_manager::types::BondingFlag::NoBonding) {
             return Err(Error::Security(Reason::PairingNotSupported));
         }
 
